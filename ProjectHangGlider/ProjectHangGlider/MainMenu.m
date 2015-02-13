@@ -76,7 +76,7 @@
             {
                 if ([spriteNode.name isEqualToString:@"startButton"])
                 {
-                    //Tapping startButton will init transition back to main game scene
+                    //Tapping startButton will init transition to story scene
                     StoryScene *storyScene = [StoryScene sceneWithSize:self.size];
                     [self.view presentScene:storyScene transition:[SKTransition doorsOpenHorizontalWithDuration:1.0]];
 

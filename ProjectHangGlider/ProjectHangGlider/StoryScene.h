@@ -14,4 +14,10 @@
 
 @interface StoryScene : SKScene
 
+@property (strong, nonatomic) SKSpriteNode *page_1;
+@property (strong, nonatomic) SKSpriteNode *page_2;
+@property (strong, nonatomic) SKSpriteNode *page_3;
+@property (strong, nonatomic) SKSpriteNode *page_4;
+@property (strong, nonatomic) SKSpriteNode *page_5;
+
 @end
