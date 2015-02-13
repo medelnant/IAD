@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>F5F6E077-A0FF-448A-8AC9-1DD7EC4AC376</string>
+	<key>IDESourceControlProjectName</key>
+	<string>ProjectHangGlider</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>3174DFB873E4775298DCC378EDC6B1DBA9608420</key>
+		<string>https://github.com/medelnant/MGD.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>ProjectHangGlider/ProjectHangGlider.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>3174DFB873E4775298DCC378EDC6B1DBA9608420</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/medelnant/MGD.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>3174DFB873E4775298DCC378EDC6B1DBA9608420</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>3174DFB873E4775298DCC378EDC6B1DBA9608420</string>
+			<key>IDESourceControlWCCName</key>
+			<string>MGD</string>
+		</dict>
+	</array>
+</dict>
+</plist>
