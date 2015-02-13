@@ -3,10 +3,10 @@
 //  ProjectHangGlider
 //
 //  Michael Edelnant
-//  Mobile Game Design Term 1501
-//  Week 4 - Game Beta
+//  Immersive Application Deployment Term 1502
+//  Week 2 - Immersive Element Integration
 //
-//  Created by vAesthetic on 1/29/15.
+//  Created by vAesthetic on 02/10/15.
 //  Copyright (c) 2015 medelnant. All rights reserved.
 //
 
@@ -14,6 +14,7 @@
 #import "GameScene.h"
 #import "EndScene.h"
 #import "CreditsScene.h"
+#import "StoryScene.h"
 
 @implementation MainMenu
 
@@ -76,8 +77,8 @@
                 if ([spriteNode.name isEqualToString:@"startButton"])
                 {
                     //Tapping startButton will init transition back to main game scene
-                    GameScene *gameScene = [GameScene sceneWithSize:self.size];
-                    [self.view presentScene:gameScene transition:[SKTransition doorsOpenHorizontalWithDuration:1.0]];
+                    StoryScene *storyScene = [StoryScene sceneWithSize:self.size];
+                    [self.view presentScene:storyScene transition:[SKTransition doorsOpenHorizontalWithDuration:1.0]];
 
                 }
                 else if ([spriteNode.name isEqualToString:@"creditsButton"])

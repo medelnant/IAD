@@ -1,5 +1,5 @@
 //
-//  AppDelegate.h
+//  StoryScene.h
 //  ProjectHangGlider
 //
 //  Michael Edelnant
@@ -10,12 +10,8 @@
 //  Copyright (c) 2015 medelnant. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import <SpriteKit/SpriteKit.h>
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
-
-@property (strong, nonatomic) UIWindow *window;
-
+@interface StoryScene : SKScene
 
 @end
-

@@ -1,5 +1,5 @@
 //
-//  CreditsScene.m
+//  StoryScene.m
 //  ProjectHangGlider
 //
 //  Michael Edelnant
@@ -10,13 +10,10 @@
 //  Copyright (c) 2015 medelnant. All rights reserved.
 //
 
-#import "CreditsScene.h"
+#import "StoryScene.h"
 #import "GameScene.h"
-#import "EndScene.h"
-#import "MainMenu.h"
 
-@implementation CreditsScene
-
+@implementation StoryScene
 
 //Default method - main init trigger from view controller instatiating scene to load.
 -(instancetype)initWithSize:(CGSize)size {
@@ -36,7 +33,7 @@
 -(void) setScene {
     
     //Add Background
-    SKSpriteNode *background = [SKSpriteNode spriteNodeWithImageNamed:@"creditsScreen"];
+    SKSpriteNode *background = [SKSpriteNode spriteNodeWithImageNamed:@"story1"];
     background.position = CGPointMake(CGRectGetMidX(self.frame),CGRectGetMidY(self.frame));
     [self addChild:background];
     
@@ -44,7 +41,7 @@
 
 //Default method called when scene is fully loaded i believe. Utilizing this for pre-loading audio.
 -(void)didMoveToView:(SKView *)view {
-
+    
     
 }
 
@@ -52,10 +49,9 @@
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     
     //Tapping anywhere will init transition back to main game scene to try again.
-    MainMenu *mainMenuScene = [MainMenu sceneWithSize:self.size];
-    [self.view presentScene:mainMenuScene transition:[SKTransition flipHorizontalWithDuration:1.0]];
+    GameScene *gameScene = [GameScene sceneWithSize:self.size];
+    [self.view presentScene:gameScene transition:[SKTransition flipHorizontalWithDuration:1.0]];
     
 }
-
 
 @end

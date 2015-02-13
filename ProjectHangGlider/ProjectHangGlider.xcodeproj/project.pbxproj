@@ -32,6 +32,7 @@
 		53C46F411A60AFA400176B29 /* wind.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 53C46F351A60AFA400176B29 /* wind.mp3 */; };
 		53C46F421A60AFA400176B29 /* woosh.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 53C46F361A60AFA400176B29 /* woosh.mp3 */; };
 		53C46F451A60B54800176B29 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53C46F441A60B54800176B29 /* AVFoundation.framework */; };
+		53EA585F1A8D90A3005C7223 /* StoryScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 53EA585E1A8D90A3005C7223 /* StoryScene.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +81,8 @@
 		53C46F351A60AFA400176B29 /* wind.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = wind.mp3; sourceTree = "<group>"; };
 		53C46F361A60AFA400176B29 /* woosh.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = woosh.mp3; sourceTree = "<group>"; };
 		53C46F441A60B54800176B29 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		53EA585D1A8D90A3005C7223 /* StoryScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoryScene.h; sourceTree = "<group>"; };
+		53EA585E1A8D90A3005C7223 /* StoryScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoryScene.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +130,8 @@
 				53C46EF61A5F2CF600176B29 /* AppDelegate.m */,
 				538557331A7B1665001EAA23 /* MainMenu.h */,
 				538557341A7B1665001EAA23 /* MainMenu.m */,
+				53EA585D1A8D90A3005C7223 /* StoryScene.h */,
+				53EA585E1A8D90A3005C7223 /* StoryScene.m */,
 				538557361A7B1A25001EAA23 /* CreditsScene.h */,
 				538557371A7B1A25001EAA23 /* CreditsScene.m */,
 				53047FCB1A7494EF0044630D /* EndScene.h */,
@@ -310,6 +315,7 @@
 				53C46EFA1A5F2CF600176B29 /* GameScene.m in Sources */,
 				53C46EF41A5F2CF600176B29 /* main.m in Sources */,
 				53047FCD1A7494EF0044630D /* EndScene.m in Sources */,
+				53EA585F1A8D90A3005C7223 /* StoryScene.m in Sources */,
 				538557351A7B1665001EAA23 /* MainMenu.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

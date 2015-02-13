@@ -3,10 +3,10 @@
 //  ProjectHangGlider
 //
 //  Michael Edelnant
-//  Mobile Game Design Term 1501
-//  Week 4 - Game Beta
+//  Immersive Application Deployment Term 1502
+//  Week 2 - Immersive Element Integration
 //
-//  Created by vAesthetic on 1/8/15.
+//  Created by vAesthetic on 02/10/15.
 //  Copyright (c) 2015 medelnant. All rights reserved.
 //
 
