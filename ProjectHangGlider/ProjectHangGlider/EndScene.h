@@ -24,4 +24,7 @@
 //Define Sound Actions
 @property (strong, nonatomic) SKAction *ambulanceTrack;
 
+//Define Score
+@property (nonatomic) int finalScore;
+
 @end

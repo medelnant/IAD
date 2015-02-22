@@ -11,6 +11,7 @@
 //
 
 #import "AppDelegate.h"
+#import "GCUtil.h"
 
 @interface AppDelegate ()
 
@@ -21,6 +22,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    //[[GCUtil sharedInstance] autheticateLocalUser];
     return YES;
 }
 

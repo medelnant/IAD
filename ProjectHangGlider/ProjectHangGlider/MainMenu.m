@@ -15,6 +15,7 @@
 #import "EndScene.h"
 #import "CreditsScene.h"
 #import "StoryScene.h"
+#import <GameKit/GameKit.h>
 
 @implementation MainMenu
 

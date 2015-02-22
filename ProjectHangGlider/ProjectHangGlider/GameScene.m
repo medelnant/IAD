@@ -84,6 +84,8 @@ static const uint32_t edgeCategory      = 8;
         //Transition to game over scene
         if (collisionObject.categoryBitMask == buildingCategory) {
             EndScene *gameOverScene = [EndScene sceneWithSize:self.size];
+            NSLog(@"GameScore %i", GAME_SCORE);
+            [gameOverScene setFinalScore:GAME_SCORE];
             [self.view presentScene:gameOverScene transition:[SKTransition doorsCloseHorizontalWithDuration:1.0]];
         }
     }
@@ -394,6 +396,9 @@ static const uint32_t edgeCategory      = 8;
 
 //Custom method to init gameplay sequence. Otherwise it would be more annoying than it already is.
 -(void)startGamePlay {
+    
+    //Reset Game Score
+    GAME_SCORE = 0;
     
     //Remove SKLabelNodes from scene
     [_instructionLabel removeFromParent];

@@ -78,6 +78,8 @@
     //Define sound actions for preloading when scene/view is loaded
     _ambulanceTrack = [SKAction playSoundFileNamed:@"ambulance.mp3" waitForCompletion:NO];
     [self runAction:_ambulanceTrack];
+    
+    NSLog(@"GameScore Sent Over = %i", _finalScore);
 
 }
 

@@ -32,6 +32,9 @@
 		53C46F411A60AFA400176B29 /* wind.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 53C46F351A60AFA400176B29 /* wind.mp3 */; };
 		53C46F421A60AFA400176B29 /* woosh.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 53C46F361A60AFA400176B29 /* woosh.mp3 */; };
 		53C46F451A60B54800176B29 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53C46F441A60B54800176B29 /* AVFoundation.framework */; };
+		53CCA60F1A9A4CCF0099590A /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53CCA60E1A9A4CCF0099590A /* GameKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		53CCA6141A9A5B970099590A /* GCUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 53CCA6131A9A5B970099590A /* GCUtil.m */; };
+		53CCA6181A9A66F60099590A /* GCNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53CCA6171A9A66F60099590A /* GCNavigationViewController.m */; };
 		53EA585F1A8D90A3005C7223 /* StoryScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 53EA585E1A8D90A3005C7223 /* StoryScene.m */; };
 /* End PBXBuildFile section */
 
@@ -81,6 +84,11 @@
 		53C46F351A60AFA400176B29 /* wind.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = wind.mp3; sourceTree = "<group>"; };
 		53C46F361A60AFA400176B29 /* woosh.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = woosh.mp3; sourceTree = "<group>"; };
 		53C46F441A60B54800176B29 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		53CCA60E1A9A4CCF0099590A /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
+		53CCA6121A9A5B970099590A /* GCUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCUtil.h; sourceTree = "<group>"; };
+		53CCA6131A9A5B970099590A /* GCUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCUtil.m; sourceTree = "<group>"; };
+		53CCA6161A9A66F60099590A /* GCNavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCNavigationViewController.h; sourceTree = "<group>"; };
+		53CCA6171A9A66F60099590A /* GCNavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCNavigationViewController.m; sourceTree = "<group>"; };
 		53EA585D1A8D90A3005C7223 /* StoryScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoryScene.h; sourceTree = "<group>"; };
 		53EA585E1A8D90A3005C7223 /* StoryScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoryScene.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -90,6 +98,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				53CCA60F1A9A4CCF0099590A /* GameKit.framework in Frameworks */,
 				53C46F451A60B54800176B29 /* AVFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -107,6 +116,7 @@
 		53C46EE51A5F2CF500176B29 = {
 			isa = PBXGroup;
 			children = (
+				53CCA60E1A9A4CCF0099590A /* GameKit.framework */,
 				53C46F441A60B54800176B29 /* AVFoundation.framework */,
 				53C46EF01A5F2CF600176B29 /* ProjectHangGlider */,
 				53C46F0F1A5F2CF600176B29 /* ProjectHangGliderTests */,
@@ -128,18 +138,9 @@
 			children = (
 				53C46EF51A5F2CF600176B29 /* AppDelegate.h */,
 				53C46EF61A5F2CF600176B29 /* AppDelegate.m */,
-				538557331A7B1665001EAA23 /* MainMenu.h */,
-				538557341A7B1665001EAA23 /* MainMenu.m */,
-				53EA585D1A8D90A3005C7223 /* StoryScene.h */,
-				53EA585E1A8D90A3005C7223 /* StoryScene.m */,
-				538557361A7B1A25001EAA23 /* CreditsScene.h */,
-				538557371A7B1A25001EAA23 /* CreditsScene.m */,
-				53047FCB1A7494EF0044630D /* EndScene.h */,
-				53047FCC1A7494EF0044630D /* EndScene.m */,
-				53C46EF81A5F2CF600176B29 /* GameScene.h */,
-				53C46EF91A5F2CF600176B29 /* GameScene.m */,
-				53C46EFD1A5F2CF600176B29 /* GameViewController.h */,
-				53C46EFE1A5F2CF600176B29 /* GameViewController.m */,
+				53CCA6151A9A66AF0099590A /* ViewControllers */,
+				53CCA6101A9A5B400099590A /* Scenes */,
+				53CCA6111A9A5B4F0099590A /* Utilities */,
 				53C46F001A5F2CF600176B29 /* Main.storyboard */,
 				53C46F031A5F2CF600176B29 /* Images.xcassets */,
 				53047FC61A7488260044630D /* player.atlas */,
@@ -196,6 +197,43 @@
 			path = ..;
 			sourceTree = "<group>";
 		};
+		53CCA6101A9A5B400099590A /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				538557331A7B1665001EAA23 /* MainMenu.h */,
+				538557341A7B1665001EAA23 /* MainMenu.m */,
+				53EA585D1A8D90A3005C7223 /* StoryScene.h */,
+				53EA585E1A8D90A3005C7223 /* StoryScene.m */,
+				538557361A7B1A25001EAA23 /* CreditsScene.h */,
+				538557371A7B1A25001EAA23 /* CreditsScene.m */,
+				53047FCB1A7494EF0044630D /* EndScene.h */,
+				53047FCC1A7494EF0044630D /* EndScene.m */,
+				53C46EF81A5F2CF600176B29 /* GameScene.h */,
+				53C46EF91A5F2CF600176B29 /* GameScene.m */,
+			);
+			name = Scenes;
+			sourceTree = "<group>";
+		};
+		53CCA6111A9A5B4F0099590A /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				53CCA6121A9A5B970099590A /* GCUtil.h */,
+				53CCA6131A9A5B970099590A /* GCUtil.m */,
+			);
+			name = Utilities;
+			sourceTree = "<group>";
+		};
+		53CCA6151A9A66AF0099590A /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				53C46EFD1A5F2CF600176B29 /* GameViewController.h */,
+				53C46EFE1A5F2CF600176B29 /* GameViewController.m */,
+				53CCA6161A9A66F60099590A /* GCNavigationViewController.h */,
+				53CCA6171A9A66F60099590A /* GCNavigationViewController.m */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -245,6 +283,7 @@
 				TargetAttributes = {
 					53C46EED1A5F2CF600176B29 = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = 92SY5BZH78;
 					};
 					53C46F0B1A5F2CF600176B29 = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -309,8 +348,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				53CCA6181A9A66F60099590A /* GCNavigationViewController.m in Sources */,
 				53C46EFF1A5F2CF600176B29 /* GameViewController.m in Sources */,
 				53C46EF71A5F2CF600176B29 /* AppDelegate.m in Sources */,
+				53CCA6141A9A5B970099590A /* GCUtil.m in Sources */,
 				538557381A7B1A25001EAA23 /* CreditsScene.m in Sources */,
 				53C46EFA1A5F2CF600176B29 /* GameScene.m in Sources */,
 				53C46EF41A5F2CF600176B29 /* main.m in Sources */,
@@ -439,9 +480,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = ProjectHangGlider/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -451,9 +495,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = ProjectHangGlider/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
