@@ -41,20 +41,27 @@
     background.position = CGPointMake(CGRectGetMidX(self.frame),CGRectGetMidY(self.frame));
     [self addChild:background];
     
-    //Add Start Button
-    SKSpriteNode *startButton = [SKSpriteNode spriteNodeWithImageNamed:@"startButton"];
-    startButton.position = CGPointMake(CGRectGetMidX(self.frame),CGRectGetMidY(self.frame) + 50);
+    SKLabelNode *startButton = [SKLabelNode labelNodeWithFontNamed:@"AvenirNextCondensed-Heavy"];
+    startButton.text = @"START";
+    startButton.fontSize = 30;
+    startButton.position = CGPointMake(CGRectGetMidX(self.frame),CGRectGetMidY(self.frame) + 40);
     startButton.name = @"startButton";
     [self addChild:startButton];
     
-    //Add Credit Button
-    SKSpriteNode *creditsButton = [SKSpriteNode spriteNodeWithImageNamed:@"creditsButton"];
-    creditsButton.position = CGPointMake(CGRectGetMidX(self.frame),CGRectGetMidY(self.frame));
+    SKLabelNode *creditsButton = [SKLabelNode labelNodeWithFontNamed:@"AvenirNextCondensed-Heavy"];
+    creditsButton.text = @"CREDITS";
+    creditsButton.fontSize = 30;
+    creditsButton.position = CGPointMake(CGRectGetMidX(self.frame),CGRectGetMidY(self.frame) - 20);
     creditsButton.name = @"creditsButton";
     [self addChild:creditsButton];
     
-    
-    
+    SKLabelNode *leaderBoards = [SKLabelNode labelNodeWithFontNamed:@"AvenirNextCondensed-Heavy"];
+    leaderBoards.text = @"LEADERBOARDS";
+    leaderBoards.fontSize = 30;
+    leaderBoards.position = CGPointMake(CGRectGetMidX(self.frame),CGRectGetMidY(self.frame) + 10);
+    leaderBoards.name = @"leaderBoards";
+    [self addChild:leaderBoards];
+
 }
 
 //Default method called when scene is fully loaded i believe. Utilizing this for pre-loading audio.
@@ -77,9 +84,16 @@
             {
                 if ([spriteNode.name isEqualToString:@"startButton"])
                 {
-                    //Tapping startButton will init transition to story scene
-                    StoryScene *storyScene = [StoryScene sceneWithSize:self.size];
-                    [self.view presentScene:storyScene transition:[SKTransition doorsOpenHorizontalWithDuration:1.0]];
+                    bool hasSeenStory = [[NSUserDefaults standardUserDefaults] boolForKey:@"hasSeenStory"];
+                    NSLog(@"Has User Scene Story: %@", hasSeenStory ? @"YES" : @"NO");
+                    
+                    if(hasSeenStory) {
+                        GameScene *gameScene = [GameScene sceneWithSize:self.size];
+                        [self.view presentScene:gameScene transition:[SKTransition doorsOpenHorizontalWithDuration:1.0]];
+                    } else {
+                        StoryScene *storyScene = [StoryScene sceneWithSize:self.size];
+                        [self.view presentScene:storyScene transition:[SKTransition doorsOpenHorizontalWithDuration:1.0]];
+                    }
 
                 }
                 else if ([spriteNode.name isEqualToString:@"creditsButton"])
@@ -88,6 +102,27 @@
                     CreditsScene *creditsScene = [CreditsScene sceneWithSize:self.size];
                     [self.view presentScene:creditsScene transition:[SKTransition flipHorizontalWithDuration:1.0]];
                 }
+                else if ([spriteNode.name isEqualToString:@"leaderBoards"])
+                {
+                    //Authenticate gameCenter.
+                    if ([GKLocalPlayer localPlayer].isAuthenticated) {
+
+                        //IF authenticated,
+                        
+                        [[GKLocalPlayer localPlayer] loadDefaultLeaderboardIdentifierWithCompletionHandler:^(NSString *leaderboardIdentifier, NSError *error) {
+                            
+                            GKGameCenterViewController *leaderboardViewController = [[GKGameCenterViewController alloc] init];
+                            UIViewController *rootViewController = self.view.window.rootViewController;
+                            [leaderboardViewController setGameCenterDelegate:self];
+                            [rootViewController presentViewController:leaderboardViewController animated:YES completion:nil];
+                            
+                         }];
+                        
+                    } else if (![GKLocalPlayer localPlayer].isAuthenticated){
+                        NSLog(@"Cant Connect to GameCenter");
+                    }
+
+                }
                 else {
                     //Do nothing
                 }
@@ -95,6 +130,13 @@
         }
     }
 }
+
+-(void)gameCenterViewControllerDidFinish:(GKGameCenterViewController *)gameCenterViewController
+{
+    UIViewController *rootViewController = self.view.window.rootViewController;
+    [rootViewController dismissViewControllerAnimated:YES completion:nil];
+}
+
 
 
 @end

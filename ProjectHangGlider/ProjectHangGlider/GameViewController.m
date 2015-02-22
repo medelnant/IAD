@@ -12,6 +12,7 @@
 
 #import "GameViewController.h"
 #import "MainMenu.h"
+#import "GCUtil.h"
 
 @implementation SKScene (Unarchive)
 
@@ -90,5 +91,6 @@
 - (BOOL)prefersStatusBarHidden {
     return YES;
 }
+
 
 @end

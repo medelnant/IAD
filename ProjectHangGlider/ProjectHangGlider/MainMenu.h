@@ -11,8 +11,8 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
-
-@interface MainMenu : SKScene
+#import <GameKit/GameKit.h>
+@interface MainMenu : SKScene <GKGameCenterControllerDelegate>
 
 
 @end

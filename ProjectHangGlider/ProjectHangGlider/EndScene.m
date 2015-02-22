@@ -12,6 +12,7 @@
 
 #import "EndScene.h"
 #import "GameScene.h"
+#import "MainMenu.h"
 
 @implementation EndScene
 
@@ -52,22 +53,16 @@
     _instructionLabel.text = @"GAME OVER";
     _instructionLabel.fontColor = [SKColor blackColor];
     _instructionLabel.fontSize = 25;
-    _instructionLabel.position = CGPointMake(CGRectGetMidX(self.frame), 250);
+    _instructionLabel.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 40);
     _instructionLabel.zPosition = 1;
     [self addChild:_instructionLabel];
     
-    NSLog(@"Instruction text should be added");
-    
-    //Description Text
-    _descriptionLabel = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue Light"];
-    _descriptionLabel.text = @"Tap the Screen to try again";
-    _descriptionLabel.fontColor = [SKColor blackColor];
-    _descriptionLabel.fontSize = 10;
-    _descriptionLabel.position = CGPointMake(CGRectGetMidX(self.frame), 235);
-    _descriptionLabel.zPosition = 1;
-    [self addChild:_descriptionLabel];
-    
-    NSLog(@"Description label should be added");
+    SKLabelNode *mainMenu = [SKLabelNode labelNodeWithFontNamed:@"AvenirNextCondensed-Heavy"];
+    mainMenu.text = @"Main Menu";
+    mainMenu.fontSize = 30;
+    mainMenu.position = CGPointMake(CGRectGetMidX(self.frame),CGRectGetMidY(self.frame));
+    mainMenu.name = @"mainMenu";
+    [self addChild:mainMenu];
     
     
 }
@@ -86,9 +81,33 @@
 //Default method to account for touches within the scene
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     
-    //Tapping anywhere will init transition back to main game scene to try again.
-    GameScene *gameScene = [GameScene sceneWithSize:self.size];
-    [self.view presentScene:gameScene transition:[SKTransition doorsOpenHorizontalWithDuration:1.0]];
+    for (UITouch *touch in touches)
+    {
+        CGPoint touchPoint = [touch locationInNode:self];
+        NSArray *spriteNodes = [self nodesAtPoint:touchPoint];
+        
+        if ([spriteNodes count])
+        {
+            for (SKNode *spriteNode in spriteNodes)
+            {
+                if ([spriteNode.name isEqualToString:@"mainMenu"])
+                {
+                    //Tapping startButton will init transition to story scene
+                    MainMenu *mainMenu = [MainMenu sceneWithSize:self.size];
+                    [self.view presentScene:mainMenu transition:[SKTransition doorsOpenHorizontalWithDuration:1.0]];
+                    
+                }else {
+                    //Do nothing
+                }
+            }
+        }
+    }
+
+    
+    
+//    Tapping anywhere will init transition back to main game scene to try again.
+//    GameScene *gameScene = [GameScene sceneWithSize:self.size];
+//    [self.view presentScene:gameScene transition:[SKTransition doorsOpenHorizontalWithDuration:1.0]];
 
 }
 

@@ -122,6 +122,10 @@ static int PAGE_COUNT = 1;
         //Tapping startButton will init transition to story scene
         GameScene *gameScene = [GameScene sceneWithSize:self.size];
         [self.view presentScene:gameScene transition:[SKTransition doorsOpenHorizontalWithDuration:1.0]];
+        
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"hasSeenStory"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
     }
     
     [self showStoryPage:PAGE_COUNT];

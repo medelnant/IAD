@@ -12,6 +12,7 @@
 
 #import "GameScene.h"
 #import "EndScene.h"
+#import "GCUtil.h"
 
 @interface GameScene ()
 
@@ -86,6 +87,8 @@ static const uint32_t edgeCategory      = 8;
             EndScene *gameOverScene = [EndScene sceneWithSize:self.size];
             NSLog(@"GameScore %i", GAME_SCORE);
             [gameOverScene setFinalScore:GAME_SCORE];
+            
+            [[GCUtil sharedGameKitUtil] sendScoreToLeaderBoard:GAME_SCORE forLeaderboardID:@"scores"];
             [self.view presentScene:gameOverScene transition:[SKTransition doorsCloseHorizontalWithDuration:1.0]];
         }
     }
