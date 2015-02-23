@@ -14,6 +14,7 @@
 
 NSString *const PresentAuthenticationViewController = @"present_authentication_view_controller";
 
+/* Preface: A majority of this helper class code was modeled from Ray Weinderlich's tutorial on working with gameCenter */
 
 @implementation GCUtil {
     BOOL _enableGameCenter;
@@ -40,23 +41,16 @@ NSString *const PresentAuthenticationViewController = @"present_authentication_v
 
 - (void)authenticateLocalPlayer
 {
-    //1
     GKLocalPlayer *localPlayer = [GKLocalPlayer localPlayer];
-    
-    //2
     localPlayer.authenticateHandler  =
     ^(UIViewController *viewController, NSError *error) {
-        //3
         [self setLastError:error];
         
         if(viewController != nil) {
-            //4
             [self setAuthenticationViewController:viewController];
         } else if([GKLocalPlayer localPlayer].isAuthenticated) {
-            //5
             _enableGameCenter = YES;
         } else {
-            //6
             _enableGameCenter = NO;
         }
     };

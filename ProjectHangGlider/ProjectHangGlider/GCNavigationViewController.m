@@ -24,14 +24,13 @@
      name:PresentAuthenticationViewController
      object:nil];
     
-    [[GCUtil sharedGameKitUtil]
-     authenticateLocalPlayer];
+    //Check against gameCenter to make sure we have everything working.
+    [[GCUtil sharedGameKitUtil] authenticateLocalPlayer];
 }
 
 - (void)showAuthenticationViewController
 {
-    GCUtil *gameKitUtil =
-    [GCUtil sharedGameKitUtil];
+    GCUtil *gameKitUtil = [GCUtil sharedGameKitUtil];
     
     [self.topViewController presentViewController:
      gameKitUtil.authenticationViewController

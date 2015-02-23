@@ -256,14 +256,15 @@
     NSLog(@"AlertView Button Clicked! : %ld", (long)buttonIndex);
     UITextField *captureField = [alertView textFieldAtIndex:0];
     
-    //Define string from what user enter within alertView
+    //Define string from what user entered within alertView
     NSString *playerNameEntered = captureField.text;
     
     //Fetch Final Score From NSUserDefaults
     NSInteger playerFinalScore = [[NSUserDefaults standardUserDefaults] integerForKey:@"playerFinalScore"];
     
-    
+    //If the OK Button was tapped
     if(buttonIndex == 1) {
+        //add score+playername to NSUserDefaults Score array
         [self addScoreToLocalLeaderBoard:&playerFinalScore withName:playerNameEntered];
     }
     

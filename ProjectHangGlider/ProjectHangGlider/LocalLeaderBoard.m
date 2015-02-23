@@ -30,6 +30,8 @@
     return self;
 }
 
+
+//Custom method to build scene
 -(void) setScene {
     
     NSLog(@"End Scene Initialized for LocalLeaderBoard!");
@@ -69,6 +71,7 @@
     
 }
 
+//Custom method for initial printing of leaderboard on scene load
 -(void)printLeaderBoard {
     
     //Fetch HighScores from UserDefaults
