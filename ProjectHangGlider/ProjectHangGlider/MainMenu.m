@@ -15,7 +15,8 @@
 #import "EndScene.h"
 #import "CreditsScene.h"
 #import "StoryScene.h"
-#import <GameKit/GameKit.h>
+#import "LocalLeaderBoard.h"
+#import "GCUtil.h"
 
 @implementation MainMenu
 
@@ -43,24 +44,33 @@
     
     SKLabelNode *startButton = [SKLabelNode labelNodeWithFontNamed:@"AvenirNextCondensed-Heavy"];
     startButton.text = @"START";
-    startButton.fontSize = 30;
-    startButton.position = CGPointMake(CGRectGetMidX(self.frame),CGRectGetMidY(self.frame) + 40);
+    startButton.fontSize = 25;
+    startButton.position = CGPointMake(CGRectGetMidX(self.frame),CGRectGetMidY(self.frame) + 50);
     startButton.name = @"startButton";
     [self addChild:startButton];
     
+    SKLabelNode *leaderBoards = [SKLabelNode labelNodeWithFontNamed:@"AvenirNextCondensed-Heavy"];
+    leaderBoards.text = @"GAMECENTER LEADERBOARDS";
+    leaderBoards.fontSize = 25;
+    leaderBoards.position = CGPointMake(CGRectGetMidX(self.frame),CGRectGetMidY(self.frame) + 25);
+    leaderBoards.name = @"leaderBoards";
+    [self addChild:leaderBoards];
+    
+    SKLabelNode *localLeaderBoards = [SKLabelNode labelNodeWithFontNamed:@"AvenirNextCondensed-Heavy"];
+    localLeaderBoards.text = @"LOCAL LEADERBOARDS";
+    localLeaderBoards.fontSize = 25;
+    localLeaderBoards.position = CGPointMake(CGRectGetMidX(self.frame),CGRectGetMidY(self.frame) - 5);
+    localLeaderBoards.name = @"localLeaderBoards";
+    [self addChild:localLeaderBoards];
+    
     SKLabelNode *creditsButton = [SKLabelNode labelNodeWithFontNamed:@"AvenirNextCondensed-Heavy"];
     creditsButton.text = @"CREDITS";
-    creditsButton.fontSize = 30;
-    creditsButton.position = CGPointMake(CGRectGetMidX(self.frame),CGRectGetMidY(self.frame) - 20);
+    creditsButton.fontSize = 25;
+    creditsButton.position = CGPointMake(CGRectGetMidX(self.frame),CGRectGetMidY(self.frame) - 35);
     creditsButton.name = @"creditsButton";
     [self addChild:creditsButton];
     
-    SKLabelNode *leaderBoards = [SKLabelNode labelNodeWithFontNamed:@"AvenirNextCondensed-Heavy"];
-    leaderBoards.text = @"LEADERBOARDS";
-    leaderBoards.fontSize = 30;
-    leaderBoards.position = CGPointMake(CGRectGetMidX(self.frame),CGRectGetMidY(self.frame) + 10);
-    leaderBoards.name = @"leaderBoards";
-    [self addChild:leaderBoards];
+
 
 }
 
@@ -122,6 +132,12 @@
                         NSLog(@"Cant Connect to GameCenter");
                     }
 
+                }
+                else if ([spriteNode.name isEqualToString:@"localLeaderBoards"])
+                {
+                    //Tapping localLeaderBoards will init transition to localLeaderBoard scene
+                    LocalLeaderBoard *localLeaderBoard = [LocalLeaderBoard sceneWithSize:self.size];
+                    [self.view presentScene:localLeaderBoard transition:[SKTransition doorsOpenHorizontalWithDuration:1.0]];
                 }
                 else {
                     //Do nothing

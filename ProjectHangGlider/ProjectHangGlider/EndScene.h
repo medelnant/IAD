@@ -11,12 +11,13 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
+#import <GameKit/GameKit.h>
 
-@interface EndScene : SKScene
+@interface EndScene : SKScene <GKGameCenterControllerDelegate>
 
 //Define Label for welcome/instruction text
-@property (strong, nonatomic) SKLabelNode *instructionLabel;
-@property (strong, nonatomic) SKLabelNode *descriptionLabel;
+@property (strong, nonatomic) SKLabelNode *gameOverLabel;
+@property (strong, nonatomic) SKLabelNode *highScoreLabel;
 
 //Define clouds BG element
 @property (strong, nonatomic) SKSpriteNode *clouds;

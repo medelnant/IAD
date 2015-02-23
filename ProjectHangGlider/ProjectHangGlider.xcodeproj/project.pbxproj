@@ -11,6 +11,7 @@
 		53047FCD1A7494EF0044630D /* EndScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 53047FCC1A7494EF0044630D /* EndScene.m */; };
 		538557351A7B1665001EAA23 /* MainMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 538557341A7B1665001EAA23 /* MainMenu.m */; };
 		538557381A7B1A25001EAA23 /* CreditsScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 538557371A7B1A25001EAA23 /* CreditsScene.m */; };
+		53B743881A9ACD38009D541F /* LocalLeaderBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B743871A9ACD38009D541F /* LocalLeaderBoard.m */; };
 		53C46EF41A5F2CF600176B29 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 53C46EF31A5F2CF600176B29 /* main.m */; };
 		53C46EF71A5F2CF600176B29 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 53C46EF61A5F2CF600176B29 /* AppDelegate.m */; };
 		53C46EFA1A5F2CF600176B29 /* GameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 53C46EF91A5F2CF600176B29 /* GameScene.m */; };
@@ -56,6 +57,8 @@
 		538557341A7B1665001EAA23 /* MainMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainMenu.m; sourceTree = "<group>"; };
 		538557361A7B1A25001EAA23 /* CreditsScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreditsScene.h; sourceTree = "<group>"; };
 		538557371A7B1A25001EAA23 /* CreditsScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreditsScene.m; sourceTree = "<group>"; };
+		53B743861A9ACD38009D541F /* LocalLeaderBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalLeaderBoard.h; sourceTree = "<group>"; };
+		53B743871A9ACD38009D541F /* LocalLeaderBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalLeaderBoard.m; sourceTree = "<group>"; };
 		53C46EEE1A5F2CF600176B29 /* ProjectHangGlider.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProjectHangGlider.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		53C46EF21A5F2CF600176B29 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		53C46EF31A5F2CF600176B29 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -210,6 +213,8 @@
 				53047FCC1A7494EF0044630D /* EndScene.m */,
 				53C46EF81A5F2CF600176B29 /* GameScene.h */,
 				53C46EF91A5F2CF600176B29 /* GameScene.m */,
+				53B743861A9ACD38009D541F /* LocalLeaderBoard.h */,
+				53B743871A9ACD38009D541F /* LocalLeaderBoard.m */,
 			);
 			name = Scenes;
 			sourceTree = "<group>";
@@ -350,6 +355,7 @@
 			files = (
 				53CCA6181A9A66F60099590A /* GCNavigationViewController.m in Sources */,
 				53C46EFF1A5F2CF600176B29 /* GameViewController.m in Sources */,
+				53B743881A9ACD38009D541F /* LocalLeaderBoard.m in Sources */,
 				53C46EF71A5F2CF600176B29 /* AppDelegate.m in Sources */,
 				53CCA6141A9A5B970099590A /* GCUtil.m in Sources */,
 				538557381A7B1A25001EAA23 /* CreditsScene.m in Sources */,

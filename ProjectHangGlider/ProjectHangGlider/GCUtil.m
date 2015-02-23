@@ -76,15 +76,19 @@ NSString *const PresentAuthenticationViewController = @"present_authentication_v
 
 -(void)sendScoreToLeaderBoard:(int64_t)score forLeaderboardID:(NSString *)identifier {
     
+    NSLog(@"Sending Scores to leaderboard");
+    
     GKScore *_score = [[GKScore alloc] initWithLeaderboardIdentifier:identifier];
     _score.value = score;
     _score.context = 0;
     _score.shouldSetDefaultLeaderboard = YES;
     
-    NSArray *scores = @[_score];
-    [GKScore reportScores:scores withCompletionHandler:^(NSError *error) {
-        //Do Something...
-        [self setLastError:error];
+    [GKScore reportScores:@[_score] withCompletionHandler:^(NSError *error) {
+        if (error != nil) {
+            NSLog(@"%@", [error localizedDescription]);
+        } else {
+            NSLog(@"Score Sent to GameCenter!");
+        }
     }];
     
 }

@@ -13,6 +13,8 @@
 #import "EndScene.h"
 #import "GameScene.h"
 #import "MainMenu.h"
+#import "LocalLeaderBoard.h"
+#import "GCUtil.h"
 
 @implementation EndScene
 
@@ -48,21 +50,44 @@
     _clouds.name = @"clouds";
     [self addChild:_clouds];
     
-    //Instruction Text
-    _instructionLabel = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue Bold"];
-    _instructionLabel.text = @"GAME OVER";
-    _instructionLabel.fontColor = [SKColor blackColor];
-    _instructionLabel.fontSize = 25;
-    _instructionLabel.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 40);
-    _instructionLabel.zPosition = 1;
-    [self addChild:_instructionLabel];
+    //Game Over Label
+    _gameOverLabel = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue Bold"];
+    _gameOverLabel.text = @"GAME OVER";
+    _gameOverLabel.fontColor = [SKColor whiteColor];
+    _gameOverLabel.fontSize = 45;
+    _gameOverLabel.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 95);
+    _gameOverLabel.zPosition = 1;
+    [self addChild:_gameOverLabel];
+    
+    
+    //High Score Label
+    _highScoreLabel = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue Bold"];
+    _highScoreLabel.fontColor = [SKColor whiteColor];
+    _highScoreLabel.fontSize = 45;
+    _highScoreLabel.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 45);
+    _highScoreLabel.zPosition = 1;
+    [self addChild:_highScoreLabel];
     
     SKLabelNode *mainMenu = [SKLabelNode labelNodeWithFontNamed:@"AvenirNextCondensed-Heavy"];
-    mainMenu.text = @"Main Menu";
-    mainMenu.fontSize = 30;
+    mainMenu.text = @"MAIN MENU";
+    mainMenu.fontSize = 25;
     mainMenu.position = CGPointMake(CGRectGetMidX(self.frame),CGRectGetMidY(self.frame));
     mainMenu.name = @"mainMenu";
     [self addChild:mainMenu];
+    
+    SKLabelNode *leaderBoards = [SKLabelNode labelNodeWithFontNamed:@"AvenirNextCondensed-Heavy"];
+    leaderBoards.text = @"GAMECENTER LEADERBOARDS";
+    leaderBoards.fontSize = 25;
+    leaderBoards.position = CGPointMake(CGRectGetMidX(self.frame),CGRectGetMidY(self.frame) - 30);
+    leaderBoards.name = @"leaderBoards";
+    [self addChild:leaderBoards];
+    
+    SKLabelNode *localLeaderBoards = [SKLabelNode labelNodeWithFontNamed:@"AvenirNextCondensed-Heavy"];
+    localLeaderBoards.text = @"LOCAL LEADERBOARDS";
+    localLeaderBoards.fontSize = 25;
+    localLeaderBoards.position = CGPointMake(CGRectGetMidX(self.frame),CGRectGetMidY(self.frame) - 60);
+    localLeaderBoards.name = @"localLeaderBoards";
+    [self addChild:localLeaderBoards];
     
     
 }
@@ -74,8 +99,11 @@
     _ambulanceTrack = [SKAction playSoundFileNamed:@"ambulance.mp3" waitForCompletion:NO];
     [self runAction:_ambulanceTrack];
     
-    NSLog(@"GameScore Sent Over = %i", _finalScore);
-
+    //Fetch Final Score From NSUserDefaults
+    NSInteger playerFinalScore = [[NSUserDefaults standardUserDefaults] integerForKey:@"playerFinalScore"];
+    _highScoreLabel.text = [NSString stringWithFormat: @"%ld meters", (long)playerFinalScore];
+    
+    [self addScoreToLocalLeaderBoard:&playerFinalScore];
 }
 
 //Default method to account for touches within the scene
@@ -96,19 +124,121 @@
                     MainMenu *mainMenu = [MainMenu sceneWithSize:self.size];
                     [self.view presentScene:mainMenu transition:[SKTransition doorsOpenHorizontalWithDuration:1.0]];
                     
-                }else {
+                } else if([spriteNode.name isEqualToString:@"leaderBoards"])
+                {
+                
+                    //Authenticate gameCenter.
+                    if ([GKLocalPlayer localPlayer].isAuthenticated) {
+                        
+                        //IF authenticated,
+                        
+                        [[GKLocalPlayer localPlayer] loadDefaultLeaderboardIdentifierWithCompletionHandler:^(NSString *leaderboardIdentifier, NSError *error) {
+                            
+                            GKGameCenterViewController *leaderboardViewController = [[GKGameCenterViewController alloc] init];
+                            UIViewController *rootViewController = self.view.window.rootViewController;
+                            [leaderboardViewController setGameCenterDelegate:self];
+                            [rootViewController presentViewController:leaderboardViewController animated:YES completion:nil];
+                            
+                        }];
+                        
+                    } else if (![GKLocalPlayer localPlayer].isAuthenticated){
+                        NSLog(@"Cant Connect to GameCenter");
+                    }
+                    
+                    
+                } else if([spriteNode.name isEqualToString:@"localLeaderBoards"])
+                {
+                    
+                    //Tapping localLeaderBoards will init transition to localLeaderBoard scene
+                    LocalLeaderBoard *localLeaderBoard = [LocalLeaderBoard sceneWithSize:self.size];
+                    [self.view presentScene:localLeaderBoard transition:[SKTransition doorsOpenHorizontalWithDuration:1.0]];
+                
+                }
+                
+                else {
                     //Do nothing
                 }
             }
         }
     }
+}
 
+
+-(NSInteger)returnLowestHighScore {
+    
+    //Define comparator to handle sorting for the final array returned from NSUserDefaults
+    NSComparator sortByNumber = ^(id dict1, id dict2) {
+        NSNumber* n1 = [dict1 objectForKey:@"playerScore"];
+        NSNumber* n2 = [dict2 objectForKey:@"playerScore"];
+        return (NSComparisonResult)[n1 compare:n2];
+    };
+    
+    //Pull back from NSUserDefaults
+    NSMutableArray *userDefaultScores = [NSMutableArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"highScores"]];
+    [userDefaultScores sortUsingComparator:sortByNumber];
+    
+    NSDictionary * lowerScoreFromDefaults = userDefaultScores[0];
+    NSNumber * lowScoreInteger = [lowerScoreFromDefaults valueForKey:@"playerScore"];
+    
+    return [lowScoreInteger integerValue];
+}
+
+
+-(void)addScoreToLocalLeaderBoard:(NSInteger *)playerFinalScore {
+    
+    NSMutableDictionary * currentScore = [[NSMutableDictionary alloc]init];
+    
+    //Build NSDictionary for current final score
+    [currentScore setObject:@"Username" forKey:@"playerName"];
+    [currentScore setObject:[NSNumber numberWithInteger:*playerFinalScore] forKey:@"playerScore"];
+    
+    //Pull back from NSUserDefaults
+    NSMutableArray *userDefaultScores = [NSMutableArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"highScores"]];
+    
+    if(userDefaultScores != nil) {
+        //Add NSDictionary to NSMutableArray from NSUserDefaults
+        [userDefaultScores addObject:currentScore];
+        //Add Array to NSUserDefaults
+        [[NSUserDefaults standardUserDefaults] setObject:userDefaultScores forKey:@"highScores"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    } else {
+        //Alloc init new NSMutableArray
+        NSMutableArray * userDefaultScores = [[NSMutableArray alloc]init];
+        //Add NSDictionary to NSMutableArray
+        [userDefaultScores addObject:currentScore];
+        //Add Array to NSUserDefaults
+        [[NSUserDefaults standardUserDefaults] setObject:userDefaultScores forKey:@"highScores"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+    
+    //Define comparator to handle sorting for the final array returned from NSUserDefaults
+    NSComparator sortByNumber = ^(id dict1, id dict2) {
+        NSNumber* n1 = [dict1 objectForKey:@"playerScore"];
+        NSNumber* n2 = [dict2 objectForKey:@"playerScore"];
+        return (NSComparisonResult)[n2 compare:n1];
+    };
     
     
-//    Tapping anywhere will init transition back to main game scene to try again.
-//    GameScene *gameScene = [GameScene sceneWithSize:self.size];
-//    [self.view presentScene:gameScene transition:[SKTransition doorsOpenHorizontalWithDuration:1.0]];
+    //Pull back from NSUserDefaults
+    NSMutableArray *newUserDefaultScores = [NSMutableArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"highScores"]];
+    [newUserDefaultScores sortUsingComparator:sortByNumber];
+    
+    //Debug
+//    NSLog(@"Current Score = %@", currentScore);
+//    NSLog(@"Player Final Score = %ld", (long)*playerFinalScore);
+//    NSLog(@"Array of Scores = %@", newUserDefaultScores);
+    
+    
+    NSLog(@"Lowest Score From Defaults is : %ld", (long)[self returnLowestHighScore]);
+    
+    
+}
 
+
+-(void)gameCenterViewControllerDidFinish:(GKGameCenterViewController *)gameCenterViewController
+{
+    UIViewController *rootViewController = self.view.window.rootViewController;
+    [rootViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

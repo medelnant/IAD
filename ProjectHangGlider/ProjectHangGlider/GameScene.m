@@ -86,9 +86,15 @@ static const uint32_t edgeCategory      = 8;
         if (collisionObject.categoryBitMask == buildingCategory) {
             EndScene *gameOverScene = [EndScene sceneWithSize:self.size];
             NSLog(@"GameScore %i", GAME_SCORE);
-            [gameOverScene setFinalScore:GAME_SCORE];
             
+            //Set current final score to NSUserDefaults
+            [[NSUserDefaults standardUserDefaults] setInteger:GAME_SCORE forKey:@"playerFinalScore"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            
+            //Send Score to GameCenter Leaderboard
             [[GCUtil sharedGameKitUtil] sendScoreToLeaderBoard:GAME_SCORE forLeaderboardID:@"scores"];
+            
+            //Sent Player to End Scene
             [self.view presentScene:gameOverScene transition:[SKTransition doorsCloseHorizontalWithDuration:1.0]];
         }
     }
