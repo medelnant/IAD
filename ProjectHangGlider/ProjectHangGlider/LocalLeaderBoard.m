@@ -2,7 +2,11 @@
 //  LocalLeaderBoard.m
 //  ProjectHangGlider
 //
-//  Created by vAesthetic on 2/22/15.
+//  Michael Edelnant
+//  Immersive Application Deployment Term 1502
+//  Week 3 - Leaderboards
+//
+//  Created by vAesthetic on 2/18/15.
 //  Copyright (c) 2015 medelnant. All rights reserved.
 //
 
@@ -101,6 +105,7 @@
 
 }
 
+//Custom method to handle sorting from buttons/labels that user taps
 -(void)sortLeaderBoard:(NSString *)isDefault {
     
     //Define comparator to handle sorting for the final array returned from NSUserDefaults - HighToLow
@@ -121,6 +126,7 @@
     NSMutableArray *userDefaultScores = [NSMutableArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"highScores"]];
     
     
+    //Hacky way to listen to toggle sorting action
     if([isDefault isEqualToString:@"YES"]) {
         [userDefaultScores sortUsingComparator:sortByHighToLow];
         

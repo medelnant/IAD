@@ -4,7 +4,7 @@
 //
 //  Michael Edelnant
 //  Immersive Application Deployment Term 1502
-//  Week 2 - Immersive Element Integration
+//  Week 3 - Leaderboards
 //
 //  Created by vAesthetic on 02/10/15.
 //  Copyright (c) 2015 medelnant. All rights reserved.
@@ -103,7 +103,14 @@
     NSInteger playerFinalScore = [[NSUserDefaults standardUserDefaults] integerForKey:@"playerFinalScore"];
     _highScoreLabel.text = [NSString stringWithFormat: @"%ld meters", (long)playerFinalScore];
     
-    [self addScoreToLocalLeaderBoard:&playerFinalScore];
+    if(playerFinalScore >= [self returnLowestHighScore]) {
+        NSLog(@"We have a new high score!");
+        
+        UIAlertView *highScoreUserNameAlert = [[UIAlertView alloc] initWithTitle:@"Add your name to the wall of fame" message:nil delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
+        highScoreUserNameAlert.alertViewStyle = UIAlertViewStylePlainTextInput;
+        [highScoreUserNameAlert show];
+    }
+
 }
 
 //Default method to account for touches within the scene
@@ -177,19 +184,24 @@
     NSMutableArray *userDefaultScores = [NSMutableArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"highScores"]];
     [userDefaultScores sortUsingComparator:sortByNumber];
     
+    //Grab Lowest Score which should be first object within array
     NSDictionary * lowerScoreFromDefaults = userDefaultScores[0];
+    
+    //Grab score value from object
     NSNumber * lowScoreInteger = [lowerScoreFromDefaults valueForKey:@"playerScore"];
     
+    //Return score value
     return [lowScoreInteger integerValue];
 }
 
 
--(void)addScoreToLocalLeaderBoard:(NSInteger *)playerFinalScore {
+-(void)addScoreToLocalLeaderBoard:(NSInteger *)playerFinalScore withName:(NSString *)playerName {
     
+    //Alloc init mutableDictionary to add to main scores array
     NSMutableDictionary * currentScore = [[NSMutableDictionary alloc]init];
     
     //Build NSDictionary for current final score
-    [currentScore setObject:@"Username" forKey:@"playerName"];
+    [currentScore setObject:playerName forKey:@"playerName"];
     [currentScore setObject:[NSNumber numberWithInteger:*playerFinalScore] forKey:@"playerScore"];
     
     //Pull back from NSUserDefaults
@@ -223,15 +235,6 @@
     NSMutableArray *newUserDefaultScores = [NSMutableArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"highScores"]];
     [newUserDefaultScores sortUsingComparator:sortByNumber];
     
-    //Debug
-//    NSLog(@"Current Score = %@", currentScore);
-//    NSLog(@"Player Final Score = %ld", (long)*playerFinalScore);
-//    NSLog(@"Array of Scores = %@", newUserDefaultScores);
-    
-    
-    NSLog(@"Lowest Score From Defaults is : %ld", (long)[self returnLowestHighScore]);
-    
-    
 }
 
 
@@ -240,5 +243,31 @@
     UIViewController *rootViewController = self.view.window.rootViewController;
     [rootViewController dismissViewControllerAnimated:YES completion:nil];
 }
+
+
+//Wait for player to enter name before enabling the ok button
+-(BOOL)alertViewShouldEnableFirstOtherButton:(UIAlertView *)alertView{
+    return [[alertView textFieldAtIndex:0].text length] > 0 && [[alertView textFieldAtIndex:0].text length]<9;
+}
+
+//Once the playername is captured, get score and entered name to add to object
+-(void)alertView:(UIAlertView*)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    
+    NSLog(@"AlertView Button Clicked! : %ld", (long)buttonIndex);
+    UITextField *captureField = [alertView textFieldAtIndex:0];
+    
+    //Define string from what user enter within alertView
+    NSString *playerNameEntered = captureField.text;
+    
+    //Fetch Final Score From NSUserDefaults
+    NSInteger playerFinalScore = [[NSUserDefaults standardUserDefaults] integerForKey:@"playerFinalScore"];
+    
+    
+    if(buttonIndex == 1) {
+        [self addScoreToLocalLeaderBoard:&playerFinalScore withName:playerNameEntered];
+    }
+    
+}
+
 
 @end

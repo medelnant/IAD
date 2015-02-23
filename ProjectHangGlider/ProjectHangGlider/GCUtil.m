@@ -2,13 +2,18 @@
 //  GCUtil.m
 //  ProjectHangGlider
 //
-//  Created by vAesthetic on 2/22/15.
+//  Michael Edelnant
+//  Immersive Application Deployment Term 1502
+//  Week 3 - Leaderboards
+//
+//  Created by vAesthetic on 2/20/15.
 //  Copyright (c) 2015 medelnant. All rights reserved.
 //
 
 #import "GCUtil.h"
 
 NSString *const PresentAuthenticationViewController = @"present_authentication_view_controller";
+
 
 @implementation GCUtil {
     BOOL _enableGameCenter;
