@@ -19,6 +19,7 @@ extern NSString *const PresentAuthenticationViewController;
 
 @property (nonatomic, readonly) UIViewController *authenticationViewController;
 @property (nonatomic, readonly) NSError *lastError;
+@property (nonatomic, strong) NSMutableDictionary * achievementsDescDictionary;
 
 + (instancetype)sharedGameKitUtil;
 - (void)authenticateLocalPlayer;

@@ -95,6 +95,8 @@
 //Default method called when scene is fully loaded i believe. Utilizing this for pre-loading audio.
 -(void)didMoveToView:(SKView *)view {
     
+    //[self resetAchievements];
+    
     //Define sound actions for preloading when scene/view is loaded
     _ambulanceTrack = [SKAction playSoundFileNamed:@"ambulance.mp3" waitForCompletion:NO];
     [self runAction:_ambulanceTrack];
@@ -110,6 +112,9 @@
         highScoreUserNameAlert.alertViewStyle = UIAlertViewStylePlainTextInput;
         [highScoreUserNameAlert show];
     }
+    
+    //Check for Achievements
+    [self checkAllAchievements];
 
 }
 
@@ -237,6 +242,78 @@
     
 }
 
+//Custom Wrapper Method to check all achievements
+-(void)checkAllAchievements {
+    [self checkForAdventureSeekerAchievement];
+    [self checkForDeterminationAchievement];
+    [self checkForBuildingCrasherAchievement];
+    [self checkForMeasurementAchievement];
+}
+
+//Custom method to trip flag for first time play
+-(void)checkForAdventureSeekerAchievement {
+    
+    //Check if Adventure Seeker has been set from NSUserDefaults
+    bool isAdventureSeeker = [[NSUserDefaults standardUserDefaults] boolForKey:@"playerFinalScore"];
+    
+    if(!isAdventureSeeker) {
+        //Set bool for isAdventureSeeker to NSUserDefaults
+        NSLog(@"AdventureSeeker Achievement Noted!");
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isAdventureSeeker"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        
+    } else {
+        NSLog(@"- AdventureSeeker Achievement already noted");
+    }
+}
+
+//Custom method to count gamePlays and award determination achievement
+-(void)checkForDeterminationAchievement {
+    NSInteger gameCount = [[NSUserDefaults standardUserDefaults] integerForKey:@"overallGameCount"];
+    
+    if(!gameCount) {
+        NSLog(@"Overall Game Count does not exist");
+    }
+}
+
+//Custom method to check if player is horrible and can't get past 500 meters.
+-(void)checkForBuildingCrasherAchievement {
+    //Fetch Final Score From NSUserDefaults
+    NSInteger playerFinalScore = [[NSUserDefaults standardUserDefaults] integerForKey:@"playerFinalScore"];
+    
+    if(playerFinalScore < 500) {
+        NSLog(@"This player sucks!");
+    }
+}
+
+
+//Custom Method to check against measurement of 1000 meters
+-(void)checkForMeasurementAchievement {
+    
+    //Check if Adventure Seeker has been set from NSUserDefaults
+    bool isDistanceFlyer = [[NSUserDefaults standardUserDefaults] boolForKey:@"isDistanceFlyer"];
+    NSLog(@"isDistanceFlyer: %s",isDistanceFlyer ? "true" : "false");
+    
+    if(!isDistanceFlyer) {
+        //Fetch Final Score From NSUserDefaults
+        NSInteger playerFinalScore = [[NSUserDefaults standardUserDefaults] integerForKey:@"playerFinalScore"];
+        
+        if(playerFinalScore > 1000) {
+            
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isDistanceFlyer"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            
+            
+            NSLog(@"Player passed 1000 meters");
+            [self reportAchievementIdentifier:@"distanceFlyer" percentComplete:100];
+        }
+    }
+    
+
+    
+}
+
 
 -(void)gameCenterViewControllerDidFinish:(GKGameCenterViewController *)gameCenterViewController
 {
@@ -269,6 +346,41 @@
     }
     
 }
+
+- (void) reportAchievementIdentifier: (NSString*) identifier percentComplete: (float) percent
+{
+    GKAchievement *achievement = [[GKAchievement alloc] initWithIdentifier: identifier];
+    if (achievement)
+    {
+        achievement.percentComplete = 100;
+        achievement.showsCompletionBanner = YES;
+        
+        [GKAchievement reportAchievements:@[achievement] withCompletionHandler:^(NSError *error)
+         {
+             if (error != nil)
+             {
+                 NSLog(@"Error in reporting achievements: %@", error);
+             } else {
+                 NSLog(@"DistanceFlyer Achievement reported to gameCenter");
+             }
+         }];
+    }
+}
+
+- (void) resetAchievements
+{
+    [GKAchievement resetAchievementsWithCompletionHandler:^(NSError *error)
+     {
+         if (error != nil) {
+             NSLog(@"Could not reset achievements due to %@", error);
+         } else {
+             NSLog(@"Achievements Reset");
+         }
+         
+     }];
+}
+
+
 
 
 @end

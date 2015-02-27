@@ -50,6 +50,7 @@ NSString *const PresentAuthenticationViewController = @"present_authentication_v
             [self setAuthenticationViewController:viewController];
         } else if([GKLocalPlayer localPlayer].isAuthenticated) {
             _enableGameCenter = YES;
+            [self retrieveAchievmentMetadata];
         } else {
             _enableGameCenter = NO;
         }
@@ -91,5 +92,29 @@ NSString *const PresentAuthenticationViewController = @"present_authentication_v
     }];
     
 }
+
+- (void) retrieveAchievmentMetadata
+{
+    self.achievementsDescDictionary = [[NSMutableDictionary alloc] initWithCapacity:2];
+    
+    [GKAchievementDescription loadAchievementDescriptionsWithCompletionHandler:
+     ^(NSArray *descriptions, NSError *error) {
+         if (error != nil) {
+             NSLog(@"Error %@", error);
+             
+         } else {
+             if (descriptions != nil){
+                 for (GKAchievementDescription* descriptionObj in descriptions) {
+                     [_achievementsDescDictionary setObject: descriptionObj forKey: descriptionObj.identifier];
+                 }
+             }
+         }
+     }];
+}
+
+
+
+
+
 
 @end
