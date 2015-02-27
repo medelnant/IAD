@@ -4,7 +4,7 @@
 //
 //  Michael Edelnant
 //  Immersive Application Deployment Term 1502
-//  Week 3 - Leaderboards
+//  Week 4 - Achievements
 //
 //  Created by vAesthetic on 02/10/15.
 //  Copyright (c) 2015 medelnant. All rights reserved.
@@ -59,7 +59,6 @@
     _gameOverLabel.zPosition = 1;
     [self addChild:_gameOverLabel];
     
-    
     //High Score Label
     _highScoreLabel = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue Bold"];
     _highScoreLabel.fontColor = [SKColor whiteColor];
@@ -95,7 +94,7 @@
 //Default method called when scene is fully loaded i believe. Utilizing this for pre-loading audio.
 -(void)didMoveToView:(SKView *)view {
     
-    //[self resetAchievements];
+    
     
     //Define sound actions for preloading when scene/view is loaded
     _ambulanceTrack = [SKAction playSoundFileNamed:@"ambulance.mp3" waitForCompletion:NO];
@@ -113,8 +112,14 @@
         [highScoreUserNameAlert show];
     }
     
+    /* To Reset Achievements for user uncomment resetAchievements and comment checkAllAchievements */
+    
+    //[self resetAchievements]; // To reset uncomment this method call and...
+    
     //Check for Achievements
-    [self checkAllAchievements];
+    [self checkAllAchievements]; // To reset comment this method call
+    
+    //Were those instructions redundant enough?
 
 }
 
@@ -253,8 +258,10 @@
 //Custom method to trip flag for first time play
 -(void)checkForAdventureSeekerAchievement {
     
+    NSLog(@"Checking for adventure seeker");
+    
     //Check if Adventure Seeker has been set from NSUserDefaults
-    bool isAdventureSeeker = [[NSUserDefaults standardUserDefaults] boolForKey:@"playerFinalScore"];
+    bool isAdventureSeeker = [[NSUserDefaults standardUserDefaults] boolForKey:@"isAdventureSeeker"];
     
     if(!isAdventureSeeker) {
         //Set bool for isAdventureSeeker to NSUserDefaults
@@ -262,36 +269,97 @@
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isAdventureSeeker"];
         [[NSUserDefaults standardUserDefaults] synchronize];
         
+        //Report to Gamecenter
+        [self reportAchievementIdentifier:@"adventureSeeker" percentComplete:100];
+        
         
     } else {
-        NSLog(@"- AdventureSeeker Achievement already noted");
+        NSLog(@"adventureSeeker: %s",isAdventureSeeker ? "true" : "false");
     }
 }
 
 //Custom method to count gamePlays and award determination achievement
 -(void)checkForDeterminationAchievement {
-    NSInteger gameCount = [[NSUserDefaults standardUserDefaults] integerForKey:@"overallGameCount"];
     
-    if(!gameCount) {
-        NSLog(@"Overall Game Count does not exist");
+    //Check if hasDetermination has been set from NSUserDefaults
+    bool hasDetermination = [[NSUserDefaults standardUserDefaults] boolForKey:@"hasDetermination"];
+    NSLog(@"hasDetermination: %s",hasDetermination ? "true" : "false");
+    
+    //If user has determination achievement
+    if(!hasDetermination) {
+        
+        //Fetch determination count to test if exists
+        int determinationGameCount = (int)[[NSUserDefaults standardUserDefaults] integerForKey:@"determinationGameCount"];
+        
+        //If Determination Count does not exist within NSUserDefaults
+        if(!determinationGameCount || determinationGameCount == 0) {
+            NSLog(@"No Determination Game Count");
+            [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"determinationGameCount"];
+        
+        //Increment Count and Report Achievement once "3" games is hit
+        } else {
+            
+            //Fetch determinationCount from NSUserDefaults
+            int dCount = (int)[[NSUserDefaults standardUserDefaults] integerForKey:@"determinationGameCount"];
+            
+            
+            if(dCount < 3) {
+                //Increment determinationCount
+                dCount ++;
+                NSLog(@"Determination Count: %i", dCount);
+                
+                //Set Determination Count within NSUserDefaults to new count
+                [[NSUserDefaults standardUserDefaults] setInteger:(NSInteger)dCount forKey:@"determinationGameCount"];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                
+                if(dCount == 3) {
+                    NSLog(@"hasDetermination awarded!");
+                    
+                    //Report to Gamecenter
+                    [self reportAchievementIdentifier:@"determination" percentComplete:100];
+
+                    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"hasDetermination"];
+                    [[NSUserDefaults standardUserDefaults] synchronize];
+                }
+                
+            }
+        
+        }
+    
     }
 }
 
 //Custom method to check if player is horrible and can't get past 500 meters.
 -(void)checkForBuildingCrasherAchievement {
-    //Fetch Final Score From NSUserDefaults
-    NSInteger playerFinalScore = [[NSUserDefaults standardUserDefaults] integerForKey:@"playerFinalScore"];
     
-    if(playerFinalScore < 500) {
-        NSLog(@"This player sucks!");
+    //Check if building crasher has been set from NSUserDefaults
+    bool isBuildingCrasher = [[NSUserDefaults standardUserDefaults] boolForKey:@"isBuildingCrasher"];
+    NSLog(@"isBuildingCrasher: %s",isBuildingCrasher ? "true" : "false");
+    
+    if(!isBuildingCrasher) {
+        
+        //Fetch Final Score From NSUserDefaults
+        NSInteger playerFinalScore = [[NSUserDefaults standardUserDefaults] integerForKey:@"playerFinalScore"];
+        
+        if(playerFinalScore < 500) {
+            NSLog(@"This player sucks!");
+            
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isBuildingCrasher"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            
+            [self reportAchievementIdentifier:@"buildingCrasher" percentComplete:100];
+        }
+    
     }
+    
+
 }
 
 
 //Custom Method to check against measurement of 1000 meters
 -(void)checkForMeasurementAchievement {
     
-    //Check if Adventure Seeker has been set from NSUserDefaults
+    //Check if distance flyer has been set from NSUserDefaults
     bool isDistanceFlyer = [[NSUserDefaults standardUserDefaults] boolForKey:@"isDistanceFlyer"];
     NSLog(@"isDistanceFlyer: %s",isDistanceFlyer ? "true" : "false");
     
@@ -352,7 +420,7 @@
     GKAchievement *achievement = [[GKAchievement alloc] initWithIdentifier: identifier];
     if (achievement)
     {
-        achievement.percentComplete = 100;
+        achievement.percentComplete = percent;
         achievement.showsCompletionBanner = YES;
         
         [GKAchievement reportAchievements:@[achievement] withCompletionHandler:^(NSError *error)
@@ -361,7 +429,7 @@
              {
                  NSLog(@"Error in reporting achievements: %@", error);
              } else {
-                 NSLog(@"DistanceFlyer Achievement reported to gameCenter");
+                 NSLog(@"%@ Achievement reported to gameCenter", identifier);
              }
          }];
     }
@@ -375,6 +443,25 @@
              NSLog(@"Could not reset achievements due to %@", error);
          } else {
              NSLog(@"Achievements Reset");
+             
+             //Reset Distance Flyer
+             [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"isDistanceFlyer"];
+             [[NSUserDefaults standardUserDefaults] synchronize];
+             
+             //Reset Building Crasher
+             [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"isBuildingCrasher"];
+             [[NSUserDefaults standardUserDefaults] synchronize];
+             
+             //Reset HasDetermination
+             [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"hasDetermination"];
+             [[NSUserDefaults standardUserDefaults] synchronize];
+             
+             [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"determinationGameCount"];
+             [[NSUserDefaults standardUserDefaults] synchronize];
+             
+             //Reset AdventureSeeker
+             [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"isAdventureSeeker"];
+             [[NSUserDefaults standardUserDefaults] synchronize];
          }
          
      }];
